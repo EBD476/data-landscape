@@ -3,8 +3,7 @@ import * as go from 'gojs';
 import { ReactDiagram, ReactOverview, ReactPalette } from "gojs-react";
 
 const GoJSChartPage = () => {
-  const diagramRef = useRef(null);
-
+  
     const [sizes, setSizes] = useState([
         400,
         '20%',
@@ -115,7 +114,30 @@ const GoJSChartPage = () => {
     //   { from: 'Delta', to: 'Alpha' }
     // ]);
 
-    // diagram.model = model;
+    const model = new go.GraphLinksModel([
+    { key: 'c0', text: 'CASEID-1254', color: 'lightblue' , score : '10', category: "detailed" },
+    { key: 1, text: 'CARD-8825664771', color: 'orange' , category: "simple"},
+    { key: 2, text: 'CARD-1233457889', color: 'orange' , category: "simple"},
+    { key: 3, text: 'CARD-1625441554', color: 'orange' , category: "simple"},
+    { key: 4, text: 'CARD-5211402144', color: 'orange' , category: "simple"},
+
+    { key: 5, text: 'TR-12345574', color: 'lightgreen' , category: "simple"},
+    { key: 6, text: 'TR-14456687', color: 'lightgreen' , category: "simple"},
+    { key: 7, text: 'TR-14556667', color: 'lightgreen' , category: "simple"},
+
+    { key: 8, items: [ "TR-12345574", "TR-14456687", "TR-14556667" ] , color: '#eee'  , category: "list"}
+    ],
+    [
+        { key: -1, from: 'c0', to: 1 },
+        { key: -2, from: 'c0', to: 2 },
+        { key: -3, from: 'c0', to: 3 },
+        { key: -4, from: 'c0', to: 4 },            
+
+        { key: -5, from: 1, to: 5},
+        { key: -6, from: 1, to: 6 },
+        { key: -7, from: 1, to: 7 },
+    ]);
+    diagram.model = model;
     return diagram;
   }
 
@@ -124,14 +146,16 @@ const GoJSChartPage = () => {
   return (
     <div  className="align-items-center mt-5">
       <h1>GoJS Chart Example</h1>
-      {/* <ReactDiagram
+      <ReactDiagram
         initDiagram={initDiagram}
+        style={{ ...layoutCSS }}
         divClassName="diagram-component"
         nodeDataArray={[]}
         linkDataArray={[]}
-        ref={diagramRef}
-      /> */}
-      <ReactDiagram
+        // ref={diagramRef}
+      />
+
+      {/* <ReactDiagram
                         initDiagram={initDiagram}
                         divClassName='diagram-component'
                         style={{ ...layoutCSS }}
@@ -158,7 +182,7 @@ const GoJSChartPage = () => {
                             { key: -6, from: 1, to: 6 },
                             { key: -7, from: 1, to: 7 },
                         ]} 
-                    />
+                    /> */}
     </div>
   );
 };
