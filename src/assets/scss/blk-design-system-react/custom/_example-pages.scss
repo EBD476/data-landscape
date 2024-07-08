@@ -1,4 +1,12 @@
 // style for the landing page
+.black-overlay{
+  background-color: #171941;
+  width: 100vw;
+  height: 700vmin;
+  opacity: 0.9;
+  z-index: 99999;
+  position: absolute;
+}
 .index-page {
     .page-header {
         height: 100vh;

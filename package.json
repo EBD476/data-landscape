@@ -94,6 +94,8 @@
   "devDependencies": {
     "ajv": "^7.2.4",
     "echarts": "^5.5.1",
-    "echarts-for-react": "^3.0.2"
+    "echarts-for-react": "^3.0.2",
+    "gojs": "^3.0.7",
+    "gojs-react": "^1.1.2"
   }
 }

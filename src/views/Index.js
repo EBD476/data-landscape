@@ -37,6 +37,7 @@ import Examples from "views/IndexSections/Examples.js";
 import Download from "views/IndexSections/Download.js";
 import Echart from "views/IndexSections/Echarts.js";
 import GraphChart from "views/IndexSections/GraphChart.js";
+import GoJSChartPage from "views/IndexSections/GoJSChartPage.js";
 
 export default function Index() {
   React.useEffect(() => {
@@ -49,6 +50,7 @@ export default function Index() {
   return (
     <>
       <IndexNavbar />
+      <div className="black-overlay"></div>
       <div className="wrapper">
         <PageHeader />
         <div className="main">
@@ -63,6 +65,7 @@ export default function Index() {
           {/* <NucleoIcons /> */}
           <Echart />
           <GraphChart />
+          <GoJSChartPage />
           <Signup />
           {/* <Examples /> */}
           {/* <Download /> */}
