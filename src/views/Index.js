@@ -35,6 +35,7 @@ import Signup from "views/IndexSections/Signup.js";
 import GetStart from "views/IndexSections/getstart.js"
 import Examples from "views/IndexSections/Examples.js";
 import Download from "views/IndexSections/Download.js";
+import Echart from "views/IndexSections/echart.js";
 
 export default function Index() {
   React.useEffect(() => {
@@ -59,6 +60,7 @@ export default function Index() {
           {/* <Typography /> */}
           {/* <JavaScript /> */}
           {/* <NucleoIcons /> */}
+          <Echart />
           <Signup />
           {/* <Examples /> */}
           {/* <Download /> */}
