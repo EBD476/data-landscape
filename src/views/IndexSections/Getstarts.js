@@ -200,7 +200,7 @@ export default function Basics() {
                   excellence. Him remarkably use projection collecting. Going
                   about eat forty world has round miles.
                 </p>
-                <div className="btn-wrapper profile pt-3">
+                {/* <div className="btn-wrapper profile pt-3">
                   <Button
                     className="btn-icon btn-round"
                     color="twitter"
@@ -234,7 +234,7 @@ export default function Basics() {
                   >
                     <i className="fab fa-dribbble" />
                   </Button>
-                </div>
+                </div> */}
               </Col>
            
             </Row>
