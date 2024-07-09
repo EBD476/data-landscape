@@ -27,6 +27,9 @@ import Index from "views/Index.js";
 import LandingPage from "views/examples/LandingPage.js";
 import RegisterPage from "views/examples/RegisterPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
+import About from "views/Pages/About.js";
+import Graph from "views/Pages/ReactGraph.js";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -37,6 +40,8 @@ root.render(
       <Route path="/landing-page" element={<LandingPage />} />
       <Route path="/register-page" element={<RegisterPage />} />
       <Route path="/profile-page" element={<ProfilePage />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/graph" element={<Graph />} />
       <Route path="*" element={<Navigate to="/components" replace />} />
     </Routes>
   </BrowserRouter>

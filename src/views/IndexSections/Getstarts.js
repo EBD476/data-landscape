@@ -61,7 +61,7 @@ export default function Basics() {
   // }, []);
   return (
     <div className="section section-basic" id="basic-elements">
-             <section className="section section-lg">
+        <section className="section section-lg">
           <section className="section">
             <img
               alt="..."

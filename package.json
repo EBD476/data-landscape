@@ -92,10 +92,15 @@
     ]
   },
   "devDependencies": {
+    "@reactflow/core": "^11.11.4",
+    "@rooks/use-window-size": "^4.11.2",
     "ajv": "^7.2.4",
     "echarts": "^5.5.1",
     "echarts-for-react": "^3.0.2",
+    "entitree-flex": "^0.4.1",
     "gojs": "^3.0.7",
-    "gojs-react": "^1.1.2"
+    "gojs-react": "^1.1.2",
+    "react-particle-image": "^1.0.2",
+    "reactflow": "^11.11.4"
   }
 }
