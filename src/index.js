@@ -29,6 +29,7 @@ import RegisterPage from "views/examples/RegisterPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import About from "views/Pages/About.js";
 import Graph from "views/Pages/ReactGraph.js";
+import GDev from "views/Pages/GDev.js";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -42,6 +43,7 @@ root.render(
       <Route path="/profile-page" element={<ProfilePage />} />
       <Route path="/about" element={<About />} />
       <Route path="/graph" element={<Graph />} />
+      <Route path="/gdev" element={<GDev />} />
       <Route path="*" element={<Navigate to="/components" replace />} />
     </Routes>
   </BrowserRouter>

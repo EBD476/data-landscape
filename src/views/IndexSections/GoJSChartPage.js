@@ -150,8 +150,8 @@ const GoJSChartPage = () => {
         initDiagram={initDiagram}
         style={{ ...layoutCSS }}
         divClassName="diagram-component"
-        nodeDataArray={[]}
-        linkDataArray={[]}
+        // nodeDataArray={[]}
+        // linkDataArray={[]}
         // ref={diagramRef}
       />
 

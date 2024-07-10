@@ -9,11 +9,13 @@
 
   .modal-header {
     border-bottom: none;
+    padding: 1rem;
+
 
     & button {
         position: absolute;
         right: 27px;
-        top: 24px;
+        // top: 24px;
         outline: 0;
         padding: 1rem;
         margin: -1rem -1rem -1rem auto;
@@ -25,7 +27,9 @@
     }
 
     .modal-title{
-      color: $black;
+      // color: $black;
+      font-weight: bold;
+      color: $white;
     }
 
     i.tim-icons {
@@ -121,7 +125,11 @@
   }
 }
 .modal-backdrop {
-  background: rgba(0,0,0,0.3);
+  background: rgba(0,0,0,1);
+}
+
+.modal-backdrop.show {
+  opacity: 0.6;
 }
 
 .modal{
@@ -148,7 +156,7 @@
 
     &.modal-info{
         @include modal-colors($info, $white);
-    }
+    }    
 
     .modal-header .close{
         color: $danger;
@@ -189,6 +197,10 @@
                 }
             }
         }
+    }
+
+    .modal-content .modal-header{
+      background-color: $success-states;
     }
 
     &.modal-black{

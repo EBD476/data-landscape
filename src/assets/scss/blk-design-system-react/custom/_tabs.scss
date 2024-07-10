@@ -6,23 +6,24 @@
 
     > .nav-item{
         > .nav-link{
-            color: $white;
+            color: $black;
+            cursor: pointer;
             margin: 0;
             margin-right: 5px;
-            background-color: $transparent-bg;
-            border-radius: 30px;
+            background-color: $search-gray;
+            border-radius: 2px;
             padding: $padding-btn-vertical $padding-round-horizontal;
             line-height: $line-height-sm;
 
             &:hover {
                 background-color: $transparent-bg;
                 border: 1px solid darken($black,5%);
-                color: rgba($white, 0.8);
+                color: rgba($black, 0.8);
             }
 
             &.active{
-                border: 1px solid $white;
-                border-radius: 30px;
+                border: 1px solid darken($black,5%);
+                border-radius: 2px;
             }
 
             i.tim-icons{
@@ -42,7 +43,7 @@
     &.nav-tabs-neutral{
         > .nav-item{
             > .nav-link{
-                color: $white;
+                color: $black;
 
                 &.active{
                     border-color: $opacity-5;
