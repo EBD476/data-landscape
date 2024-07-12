@@ -158,6 +158,14 @@
         @include modal-colors($info, $white);
     }    
 
+    .modal-dialog{
+      max-width: 800px;
+    }
+
+    .modal-content{
+      min-height: 500px;
+    }
+
     .modal-header .close{
         color: $danger;
         text-shadow: none;

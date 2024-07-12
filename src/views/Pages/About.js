@@ -55,7 +55,7 @@ export default function LandingPage() {
   return (
     <>
       <ExamplesNavbar />
-      <div className="black-overlay"></div>
+      {/* <div className="black-overlay"></div> */}
       <div className="wrapper">
         <br /><br /><br />
         {/* <div className="page-header"> */}        

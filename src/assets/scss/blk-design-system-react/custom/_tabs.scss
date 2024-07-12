@@ -9,10 +9,12 @@
             color: $black;
             cursor: pointer;
             margin: 0;
-            margin-right: 5px;
-            background-color: $search-gray;
-            border-radius: 2px;
-            padding: $padding-btn-vertical $padding-round-horizontal;
+            margin-right: 2px;
+            background-color: #88888855;
+            //$search-gray;
+            border-radius: 1px;
+            border: 1px solid #63636355;
+            // padding: $padding-btn-vertical $padding-round-horizontal;
             line-height: $line-height-sm;
 
             &:hover {

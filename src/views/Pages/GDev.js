@@ -106,8 +106,8 @@ export  function LandingPage() {
     };
 
     const containerCSS = {
-        height: '70vh',
-        width: '98vw',
+        height: '90vh',
+        width: '100vw',
     };
 
     const flowCSS= {

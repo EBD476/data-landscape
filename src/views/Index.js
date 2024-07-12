@@ -50,7 +50,7 @@ export default function Index() {
   return (
     <>
       <IndexNavbar />
-      <div className="black-overlay"></div>
+      {/* <div className="black-overlay"></div> */}
       <div className="wrapper">
         <PageHeader />
         <div className="main">

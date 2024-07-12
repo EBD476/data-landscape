@@ -152,7 +152,7 @@ export  function LandingPage() {
   return (
     <>
       <ExamplesNavbar />
-      <div className="black-overlay"></div>
+      {/* <div className="black-overlay"></div> */}
       <div className="wrapper">
       <section >    
       <div style={{ ...containerCSS }}>         
