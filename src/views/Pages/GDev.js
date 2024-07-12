@@ -32,7 +32,7 @@ import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import { layoutElements } from './layout-elements.js';
 import useWindowSize from "@rooks/use-window-size";
 import CustomNode from './GCustomNode.js';
-
+import Sidebar from './Sidebar';
 
 import 'reactflow/dist/style.css';
 
@@ -59,6 +59,9 @@ const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
     2: { id: '2', name: 'child node' , job: '22 K'}
 }
 
+let id = 0;
+const getId = () => `dndnode_${id++}`
+
 const { nodes: layoutedNodes, edges: layoutedEdges } = layoutElements(
   initialTree,
   treeRootId,
@@ -71,6 +74,7 @@ export  function LandingPage() {
 
     const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
+    const { screenToFlowPosition } = useReactFlow();
 
     // const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     // const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -79,6 +83,41 @@ export  function LandingPage() {
         (params) => setEdges((eds) => addEdge(params, eds)),
         [setEdges],
       );
+
+    const onDragOver = useCallback((event) => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'move';
+      }, []);
+
+    const onDrop = useCallback(
+      (event) => {
+        event.preventDefault();
+  
+        const type = event.dataTransfer.getData('application/reactflow');
+  
+        // check if the dropped element is valid
+        if (typeof type === 'undefined' || !type) {
+          return;
+        }
+  
+        // project was renamed to screenToFlowPosition
+        // and you don't need to subtract the reactFlowBounds.left/top anymore
+        // details: https://reactflow.dev/whats-new/2023-11-10
+        const position = screenToFlowPosition({
+          x: event.clientX,
+          y: event.clientY,
+        });
+        const newNode = {
+          id: getId(),
+          type,
+          position,
+          data: { label: `${type} node` },
+        };
+  
+        setNodes((nds) => nds.concat(newNode));
+      },
+      [screenToFlowPosition],
+    );
 
     const { setViewport, zoomIn, zoomOut ,zoomTo} = useReactFlow();
 
@@ -98,7 +137,7 @@ export  function LandingPage() {
     }, []);
 
       const layoutCSS = {
-        height: '100vh',
+        height: '90vh',
         width: '100vw',
         display: 'flex',
         alignItems: 'center',
@@ -106,7 +145,7 @@ export  function LandingPage() {
     };
 
     const containerCSS = {
-        height: '90vh',
+        height: '85vh',
         width: '100vw',
     };
 
@@ -120,10 +159,11 @@ export  function LandingPage() {
       {/* <div className="black-overlay"></div> */}
       <div className="wrapper">
       <section >    
-      <div style={{ ...containerCSS }}>         
-            <Row className="row-grid justify-content-between h-100 pt-5" >
-                <Col lg="12" md="12">
-                <br/>
+      <Sidebar />
+      <div style={{ ...containerCSS }}>               
+            <Row className="row-grid justify-content-between h-100" >              
+                <Col lg="12" md="12">             
+                {/* <br/> */}
                 {/* test react flow */}
                   <ReactFlow
                     nodes={nodes}
@@ -131,7 +171,9 @@ export  function LandingPage() {
                     onNodesChange={onNodesChange}
                     onEdgesChange={onEdgesChange}
                     onConnect={onConnect}   
-                    zoomOnScroll = {false}
+                    onDrop={onDrop}
+                    onDragOver={onDragOver}
+                    // zoomOnScroll = {false}
                     nodeTypes={nodeTypes}
                     fitView              
                     className="bg-teal-50"
@@ -146,12 +188,45 @@ export  function LandingPage() {
                     <Controls />
                     <MiniMap />
                     <Background variant="dots" gap={12} size={1} />
+                    {/* <Panel>
+                      <h3>Node Toolbar position:</h3>
+                      <button onClick={() => setPosition(Position.Top)}>top</button>
+                      <button onClick={() => setPosition(Position.Right)}>right</button>
+                      <button onClick={() => setPosition(Position.Bottom)}>bottom</button>
+                      <button onClick={() => setPosition(Position.Left)}>left</button>
+                      <h3>Override Node Toolbar visibility</h3>
+                      <label>
+                        <input
+                          type="checkbox"
+                          onChange={(e) => forceToolbarVisible(e.target.checked)}
+                        />
+                        <span>Always show toolbar</span>
+                      </label>
+                    </Panel> */}
+
+                      <div className="updatenode__controls">
+                              <label>label:</label>
+                              <input
+                                value="test"
+                              />
+                                <br/>
+                              <label className="updatenode__bglabel">background:</label>                        
+                              <input value="nodebg" />
+                              <div className="updatenode__checkboxwrapper">
+                                <label>hidden:</label>
+                                <input
+                                  type="checkbox"
+                                  checked="nodeHidden"                           
+                                />
+                              </div>
+                            </div>
+
                 </ReactFlow>
                 </Col>
             </Row>            
         </div>
         </section>
-        </div>    
+        </div>            
       </>
   );
 }
