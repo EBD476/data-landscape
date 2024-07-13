@@ -24,6 +24,7 @@ import {
   ListGroup,
   Container,
   Row,
+  Navbar,NavbarBrand,
   Col,
 } from "reactstrap";
 
@@ -54,9 +55,9 @@ const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
     //   type: 'input',
       type: 'custom',
       job: '22 K',
-      children: ['2']      
+      // children: ['2']      
     },
-    2: { id: '2', name: 'child node' , job: '22 K'}
+    // 2: { id: '2', name: 'child node' , job: '22 K'}
 }
 
 let id = 0;
@@ -155,10 +156,18 @@ export  function LandingPage() {
 
   return (
     <>
-      <ExamplesNavbar />
+      {/* <ExamplesNavbar /> */}
       {/* <div className="black-overlay"></div> */}
       <div className="wrapper">
       <section >    
+      <Navbar        
+        color="info"
+        dark
+      >
+        <NavbarBrand href="/">
+          Reactstrap
+        </NavbarBrand>
+      </Navbar>
       <Sidebar />
       <div style={{ ...containerCSS }}>               
             <Row className="row-grid justify-content-between h-100" >              
