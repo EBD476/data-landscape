@@ -1,5 +1,5 @@
 .table{
-  > tbody > tr > td {
+  > tbody > tr > td , > thead > tr > th {
     color: rgba(17, 17, 17, 0.7) !important;
 
     .photo {
@@ -158,9 +158,22 @@
     }
 
     > tfoot > tr {
-      color: hsla(0,0%,100%,.7);
+      color: rgba(191, 196, 219, 0.897);
       text-transform: uppercase;
     }
+}
+
+.modal .table tbody > tr >td {
+  font-size: 12px;
+  padding: 0 2px;
+}
+
+.modal .table tbody td:first-child {
+  width: 30%;
+}
+
+.modal .table > thead > tr > th {
+  background-color: rgb(185, 192, 199);
 }
 
 .table-responsive{

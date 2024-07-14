@@ -1,0 +1,145 @@
+//-----------------------------------
+.flow-toolbar{
+    height: 55px;
+  }
+  
+  .flow-toolbar .icon {
+    font-size: 2rem;
+  }
+  
+  .flow-toolbar .icon i {
+    height: 40px;
+    margin: 0 20px;
+  }
+  
+  .updatenode__controls {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 4;
+    font-size: 12px;
+  }
+  
+  .dndflow {
+    flex-direction: column;
+    // display: flex;
+    flex-grow: 1;
+    height: 100%;
+    // box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+  }
+  
+  .dndflow aside {
+    border-right: 1px solid #eee;
+    padding: 0 10px;
+    font-size: 12px;
+    background: $primary;
+    display: flex;
+    color: #eee;
+    height:55px;
+    // margin-top: 80px;
+    // padding-top: 5px;
+    // border-bottom: 1px solid #d2dcef;
+    // box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+  }
+  
+  .dndflow aside .title {    
+    font-size: 1rem;
+    margin-top: 5px;
+    margin-left: 10px;
+    color: #f0f0f0;
+    padding-right: 10px;
+  }
+
+  .dndflow aside .description {
+    font-size: 0.7rem;
+    margin-bottom: 10px;
+    color: #f0f0f0;
+    padding-right: 10px;
+  }
+
+  .dndflow .dndnode {
+    height: 40px;
+    padding: 4px;
+    border: 1px solid #ccccd3;
+    color: #eee;
+    border-radius: 2px;
+    margin-bottom: 10px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+  }
+  
+  .dndflow .dndnode.input {
+    border-color: #0041d0;
+  }
+  
+  .dndflow .dndnode.output {
+    border-color: #ff0072;
+  }
+  
+  .dndflow .reactflow-wrapper {
+    flex-grow: 1;
+    height: 100%;
+  }
+  
+  .dndflow .selectall {
+    margin-top: 10px;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .dndflow {
+      flex-direction: row;
+    }
+  
+    .dndflow aside {
+      width: 100%;
+      // max-width: 500px;
+    }
+  }
+  
+  .landing-page .navbar{
+    padding: 5px;
+    margin: 0 !important;
+  }
+
+  
+#flow-status {
+    height: 33px;
+    background-color: #f4f5f7;
+    border-bottom: 1px solid #aabbc3;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+    z-index: 3;
+    position: relative;
+}
+
+#flow-status-container{
+  padding: 6px 20px;
+  font-size: 0.7rem;
+  display: flex;
+  // justify-content: space-between;
+}
+
+#flow-status-container i{
+  padding-right: 10px;
+  font-size: 1rem;
+  border: 0;
+}
+
+#flow-status-container > div{
+  margin-right: 3rem ;
+}
+
+aside >div.item i {
+  padding-top: 3px;
+  border: 0 !important;
+}
+
+aside >div.item:hover{
+  // color: white !important;
+  padding: 2px 5px; 
+  background-color: #f6f6f6;
+  border: 0;  
+  cursor: grabbing;
+}

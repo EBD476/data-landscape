@@ -9,7 +9,7 @@ import ReactFlow, {
     useReactFlow,
     Panel,
     MiniMap,
-    Controls,    
+    Controls,        
   } from 'reactflow';
 
 // reactstrap components
@@ -26,6 +26,9 @@ import {
   Row,
   Navbar,NavbarBrand,
   Col,
+  NavItem,
+  NavLink,
+  NavbarText
 } from "reactstrap";
 
 // core components
@@ -110,7 +113,7 @@ export  function LandingPage() {
         });
         const newNode = {
           id: getId(),
-          type,
+          type:'custom',
           position,
           data: { label: `${type} node` },
         };
@@ -126,7 +129,7 @@ export  function LandingPage() {
         setViewport({ x: 0, y: 0, zoom: 1 }, { duration: 200 });
       }, [setViewport]);
 
-    zoomTo(0.9);
+    zoomTo(0.6);
 
     const [bgColor, setBgColor] = useState(initBgColor);
     React.useEffect(() => {
@@ -160,15 +163,27 @@ export  function LandingPage() {
       {/* <div className="black-overlay"></div> */}
       <div className="wrapper">
       <section >    
-      <Navbar        
-        color="info"
+      {/* <Navbar                
         dark
       >
         <NavbarBrand href="/">
           Reactstrap
         </NavbarBrand>
-      </Navbar>
+        <NavItem>
+          <NavLink href="#">
+             Process
+          </NavLink>
+        </NavItem>
+       <NavbarText>Simple Text</NavbarText>
+      </Navbar> */}
       <Sidebar />
+      <div id="flow-status">
+          <div id="flow-status-container">
+            <div><i className="tim-icons icon-credit-card text-info" /> 52 / 3.86 KB</div>
+            <div><i className="tim-icons icon-minimal-right  text-info" /> 52 / 3.86 KB</div>
+            <div><i className="tim-icons icon-pin text-info" /> 52 / 3.86 KB</div>
+          </div>
+       </div>
       <div style={{ ...containerCSS }}>               
             <Row className="row-grid justify-content-between h-100" >              
                 <Col lg="12" md="12">             

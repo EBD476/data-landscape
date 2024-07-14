@@ -81,16 +81,17 @@ function CustomNode({ data }) {
         </Card>
 
         <Modal className='modal-success' isOpen={modal} toggle={toggle} fade={false}>
-            <ModalHeader toggle={toggle}>Configure Processor | <small>ConsumeKafka_2_0 1.21.0</small> </ModalHeader>
-            <ModalBody>
-
+            <ModalHeader toggle={toggle}>Configure Processor | <small>ConsumeKafka_2_0 1.21.0</small>                        
+            </ModalHeader>
+            <div className="modal-status">status</div>
+            <ModalBody>        
              <Nav tabs>
                 <NavItem>
                 <NavLink                 
                     className={classnames({ active: activeTab === '1' })}                                 
                     onClick={() => { toggleTab('1'); }}
                 >
-                    Tab1
+                    SETTINGS
                 </NavLink>
                 </NavItem>
                 <NavItem>
@@ -98,7 +99,7 @@ function CustomNode({ data }) {
                     className={classnames({ active: activeTab === '2' })}                
                     onClick={() => { toggleTab('2'); }}
                 >
-                    Properties
+                    SCHEDULING
                 </NavLink>
                 </NavItem>
                 <NavItem>
@@ -106,89 +107,106 @@ function CustomNode({ data }) {
                     className={classnames({ active: activeTab === '3' })}                    
                     onClick={() => { toggleTab('3'); }}
                 >
-                    Tab3
+                    PROPERTIES
                 </NavLink>
                 </NavItem>
+                <NavItem>
+                <NavLink
+                    className={classnames({ active: activeTab === '4' })}                    
+                    onClick={() => { toggleTab('4'); }}
+                >
+                    RELATIONSHIPS
+                </NavLink>
+                </NavItem>
+                <NavItem>
+                <NavLink
+                    className={classnames({ active: activeTab === '5' })}                    
+                    onClick={() => { toggleTab('5'); }}
+                >
+                    COMMENTS
+                </NavLink>
+                </NavItem>
+                
+
             </Nav>
-             <TabContent activeTab={activeTab}>
+             <TabContent activeTab={activeTab}> 
                 <TabPane tabId="1">
                 <Row>
                     <Col sm="12">
                         <p className='ml-3'>
-                            Id
-                            d135ce6b-4f19-3490-9058-1407027e9530
+                        <div class="setting">                            
+                                Name                            
+                             <div className="setting-field">
+                                <input type="text" id="processor-name" name="processor-name">
+                                </input>
+                                <input className="ml-2 mr-1" type="checkbox" id="processor-name" name="processor-name"></input>enabled
+                                </div>
+                            </div>                                                  
+                            <div class="setting">
+                                Id
+                                <div className="setting-field">
+                                    d135ce6b-4f19-3490-9058-1407027e9530 
+                                </div>
+                            </div>
+                            
+                            <div class="setting">
                             Type
-                            ConsumeKafka_2_0 1.21.0
+                                <div className="setting-field">
+                                ConsumeKafka_2_0 1.21.0 
+                                </div>
+                            </div>
+
+                            <div class="setting">
                             Bundle
-                            org.apache.nifi - nifi-kafka-2-0-nar
-                        </p>
+                                <div className="setting-field">
+                                org.apache.nifi - nifi-kafka-2-0-nar
+                                </div>
+                            </div>
+                           </p>
+                                                            
                     </Col>
                 </Row>
                 </TabPane>
                 <TabPane tabId="2">
                 <Row>
                  <Col sm="12">
-                    <h5>
-                        Tab 2 Contents
-                    </h5>
+                    <p >
+                        Required fields
+                    </p>
                     <Table striped>
                     <thead>
                         <tr>
                         <th>
-                            #
+                            Property
                         </th>
                         <th>
-                            First Name
-                        </th>
-                        <th>
-                            Last Name
-                        </th>
-                        <th>
-                            Username
+                            Value
                         </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                        <th scope="row">
-                            1
-                        </th>
                         <td>
                             Mark
                         </td>
                         <td>
                             Otto
                         </td>
-                        <td>
-                            @mdo
-                        </td>
                         </tr>
                         <tr>
-                        <th scope="row">
-                            2
-                        </th>
                         <td>
                             Jacob
                         </td>
                         <td>
                             Thornton
                         </td>
-                        <td>
-                            @fat
-                        </td>
                         </tr>
                         <tr>
-                        <th scope="row">
-                            3
-                        </th>
                         <td>
                             Larry
                         </td>
                         <td>
                             the Bird
-                        </td>
-                        <td>
-                            @twitter
                         </td>
                         </tr>
                     </tbody>
@@ -196,24 +214,25 @@ function CustomNode({ data }) {
                     </Col>
                 </Row>
                 </TabPane>
-                <TabPane tabId="3">
-                <Row>
-                 <Col sm="12">
-                    <textarea className='ml-3' style={{ width: '98%' }} rows="8">
-                    </textarea>
-                    </Col>
-                </Row>
+                <TabPane tabId="5">                             
+                    <div className="tab-content">
+                        <textarea style={{ width: '98%' }} rows="8">
+                        </textarea>    
+                  </div>
                 </TabPane>
             </TabContent>
 
             </ModalBody>
             <ModalFooter>
-            <Button color="info" onClick={toggle}>
+            <div class="dialog-buttons">
+                <div class="button"><span>Apply</span></div>
+                <div class="button cancel" ><span>Cancel</span></div></div>
+            {/* <Button color="info" onClick={toggle}>
                 Do Something
             </Button>{' '}
             <Button color="secondary" onClick={toggle}>
                 Cancel
-            </Button>
+            </Button> */}
             </ModalFooter>
           </Modal>
 

@@ -126,3 +126,47 @@
     color: $danger-states;
   }
 }
+
+
+input[type=text] {
+  background-color: #eaeef0;
+  border: 0;
+  min-width: 250px;
+
+  &:focus{
+    background-color: #fff;
+    border: 1px solid #004849;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    outline: 0;
+  }
+}
+
+
+input[type=checkbox]{
+  padding: 0;
+  margin: 0;
+  min-width: 0;  
+}
+
+.setting-field{
+  color: #775351;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.setting{
+  margin-bottom: 8px;
+}
+
+textarea{
+  background-color: #eaeef0;
+  border: 0;
+  &:focus{
+    background-color: #fff;
+    border: 1px solid #004849;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    outline: 0;
+  }
+}
+
+
