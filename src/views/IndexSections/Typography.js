@@ -155,7 +155,7 @@ export default function Typography() {
               <img
                 alt="..."
                 className="img-fluid rounded shadow"
-                src={require("assets/img/ryan.jpg")}
+                // src={require("assets/img/ryan.jpg")}
                 style={{ width: "150px" }}
               />
             </Col>
@@ -166,7 +166,7 @@ export default function Typography() {
               <img
                 alt="..."
                 className="img-fluid rounded-circle shadow"
-                src={require("assets/img/james.jpg")}
+                // src={require("assets/img/james.jpg")}
                 style={{ width: "150px" }}
               />
             </Col>
@@ -177,7 +177,7 @@ export default function Typography() {
               <img
                 alt="..."
                 className="img-fluid rounded shadow-lg"
-                src={require("assets/img/lora.jpg")}
+                // src={require("assets/img/lora.jpg")}
                 style={{ width: "150px" }}
               />
             </Col>
@@ -188,7 +188,7 @@ export default function Typography() {
               <img
                 alt="..."
                 className="img-fluid rounded-circle shadow-lg"
-                src={require("assets/img/mike.jpg")}
+                // src={require("assets/img/mike.jpg")}
                 style={{ width: "150px" }}
               />
             </Col>

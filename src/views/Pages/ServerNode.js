@@ -23,7 +23,7 @@ import {
   import ModalWindow from './ModalWinodw.js';
 
 
-function CustomNode({ data }) {
+function ServerNode({ data ,status}) {
 
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
@@ -45,20 +45,18 @@ function CustomNode({ data }) {
 
   return (
     
-    <div >
-        <Card className="card-stats" onDoubleClick={openModal}>
+    <div >        
+        <Card className={`card-server-stats server-status-${data.status}`} onDoubleClick={openModal}>
         <CardBody>
         <Row>
             <Col md="3" xs="5">
-            <div className="icon-big text-center icon-warning">
-                <i className="tim-icons icon-components text-info" />
-            </div>
+            <img src={require("assets/img/core-server6.png")}  onDoubleClick={openModal} />
             </Col>
             <Col md="9" xs="7">
             <div className="numbers text-left">
-                <CardTitle tag="p">{data.name}</CardTitle>
+                <CardTitle tag="p">{data.name || '[Server Name]'}</CardTitle>
                 <p />
-                <p className="card-category">{data.job}</p>              
+                <p className="card-category">{data.ip || '[Server IP]'}</p>              
             </div>
             </Col>
         </Row>        
@@ -66,35 +64,26 @@ function CustomNode({ data }) {
         <ListGroup flush>
             <ListGroupItem>
              <Row>
-                 <Col md="3">IN</Col><Col md="5" className='text-center'>0 (0 bytes)</Col ><Col md="4" className='text-right'> 5 min</Col>
+                 <Col md="5">CPU</Col><Col md="5" className='text-center'>44.7%</Col >
               </Row>                
             </ListGroupItem>
-            <ListGroupItem>
+            <ListGroupItem className="">
                 <Row>
-                    <Col md="3">OUT</Col><Col md="5" className='text-center'>0 (0 bytes)</Col ><Col md="4" className='text-right'> 5 min</Col>
+                    <Col md="5">MEMORY</Col><Col md="5" className='text-center'>8.9/16GB</Col >
                 </Row>
             </ListGroupItem>
             <ListGroupItem>
                 <Row>
-                    <Col md="3"  className="pr-0">TASKS/TIME</Col><Col md="5" className='text-center'>0 (0 bytes)</Col ><Col md="4" className='text-right'> 5 min</Col>
+                    <Col md="5"  className="pr-0">DISK ACTIVITY</Col><Col md="5" className='text-center'>56.20 KB/s</Col >
+                </Row>
+            </ListGroupItem>
+            <ListGroupItem className="">
+                <Row>
+                    <Col md="5"  className="pr-0">NETWORK</Col><Col md="5" className='text-center'>1.69 Mbps</Col >
                 </Row>
             </ListGroupItem>
         </ListGroup>
-        {/* <CardFooter>
-            <div>
-            <ul md="12" > 
-                        <li>IN</li>
-                        <li>OUT</li>
-                        <li>TASKS/TIME</li>
-                    </ul>
-            </div>
-        </CardFooter> */}
         </Card>
-
-            <ModalWindow  isOpen={isModalOpen} onClose={closeModal}>
-                              <h2>Modal Content</h2>
-                              <p>This is the content inside the modal.</p>
-            </ModalWindow>
             
         <Modal className='modal-success' isOpen={isModalOpen} toggle={closeModal} fade={false}>
             <ModalHeader toggle={closeModal}>Configure Processor | <small>ConsumeKafka_2_0 1.21.0</small>                        
@@ -258,4 +247,4 @@ function CustomNode({ data }) {
   );
 }
 
-export default memo(CustomNode);
+export default memo(ServerNode);

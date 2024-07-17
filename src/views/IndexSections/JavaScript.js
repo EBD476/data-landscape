@@ -53,7 +53,7 @@ const carouselItems = [
     caption: "",
   },
   {
-    src: require("assets/img/mark-finn.jpg"),
+    // src: require("assets/img/mark-finn.jpg"),
     altText: "Slide 3",
     caption: "",
   },

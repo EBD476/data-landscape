@@ -23,7 +23,7 @@ import {
   import ModalWindow from './ModalWinodw.js';
 
 
-function CustomNode({ data }) {
+function CoreNode({ data }) {
 
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
@@ -46,7 +46,8 @@ function CustomNode({ data }) {
   return (
     
     <div >
-        <Card className="card-stats" onDoubleClick={openModal}>
+        <img src={require("assets/img/core-server5.png")}  onDoubleClick={openModal} />
+        {/* <Card className="card-stats" onDoubleClick={openModal}>
         <CardBody>
         <Row>
             <Col md="3" xs="5">
@@ -80,21 +81,12 @@ function CustomNode({ data }) {
                 </Row>
             </ListGroupItem>
         </ListGroup>
-        {/* <CardFooter>
-            <div>
-            <ul md="12" > 
-                        <li>IN</li>
-                        <li>OUT</li>
-                        <li>TASKS/TIME</li>
-                    </ul>
-            </div>
-        </CardFooter> */}
-        </Card>
+        </Card> */}
 
-            <ModalWindow  isOpen={isModalOpen} onClose={closeModal}>
+            {/* <ModalWindow  isOpen={isModalOpen} onClose={closeModal}>
                               <h2>Modal Content</h2>
                               <p>This is the content inside the modal.</p>
-            </ModalWindow>
+            </ModalWindow> */}
             
         <Modal className='modal-success' isOpen={isModalOpen} toggle={closeModal} fade={false}>
             <ModalHeader toggle={closeModal}>Configure Processor | <small>ConsumeKafka_2_0 1.21.0</small>                        
@@ -258,4 +250,4 @@ function CustomNode({ data }) {
   );
 }
 
-export default memo(CustomNode);
+export default memo(CoreNode);

@@ -101,6 +101,7 @@ export const layoutElements = (tree, rootId, direction = 'TB') => {
     newNode.data = { label: node.name, direction, isRoot, ...node };
     newNode.id = node.id;
     newNode.type = 'custom';
+    newNode.status = 'green';
 
     newNode.width = nodeWidth;
     newNode.height = nodeHeight;

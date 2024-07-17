@@ -143,3 +143,107 @@ aside >div.item:hover{
   border: 0;  
   cursor: grabbing;
 }
+
+.modal-content .modal-body input {
+  line-height: 1.7rem;
+}
+
+.modal-content .modal-body p {
+    line-height: 1rem;
+    font-size: 0.8rem;
+}
+
+.modal-content .modal-body h4 {
+  color: #775351;
+}
+
+// .modal-content .modal-body .tags{
+//   cursor: pointer;
+//   color: #004849;
+//   font-weight: bold;
+//   display: inline-block;
+//   background-color: #e3e8eb;
+//   border-radius: 2px;
+//   padding: 1px 4px;
+// }
+
+ul.tag-cloud {
+  font-size: 90%;
+  margin-left: -5px;
+  overflow: hidden;
+  padding: 0;
+}
+
+ul.tag-cloud li {
+  float: left;
+  list-style-type: none;
+  margin: 2px 2px;
+  height: 20px;
+  white-space: nowrap;
+  line-height: 20px;
+  max-width: 180px;
+}
+
+ul.tag-cloud span.link {
+  cursor: pointer;
+  color: #4d5e84;
+  font-weight: bold;
+  display: inline-block;
+  background-color: #e3e8eb;
+  border-radius: 2px;
+  padding: 1px 4px;
+  font-size: 0.9rem;
+}
+
+#processor-type-container {  
+  padding-top: 10px;
+  display: flex;
+}
+
+#processor-type-bundle  {
+  margin-left: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 13px;
+  // line-height: 16px;
+  color: #666;
+  letter-spacing: .25px;
+}
+
+#processor-types-table{
+  height: 55%;
+  overflow: auto;
+}
+
+Button:not(.react-flow__controls-button,.close){
+    height: 32px;
+    width: 90px !important;
+    padding: 0 8px !important;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 11px !important;
+    line-height: 33px;
+    text-align: center;
+    border: 0;
+    float: right;
+    position: relative;
+    background: #8196aa !important;
+    border-radius: 0 !important;
+    color: #fff;    
+    cursor: pointer;
+}
+
+Button.cancel{
+  background-color: #bcd0e2 !important ;
+}
+
+Button.btn-secondary:hover ,Button.btn:hover{
+  box-shadow: none !important;
+  background-color: #4d5e84 !important;
+  background-image: none !important;
+  transform: none !important;
+}
+
+
+

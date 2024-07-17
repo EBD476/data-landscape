@@ -59,7 +59,7 @@ const carouselItems = [
     caption: "Somewhere Beyond, United States",
   },
   {
-    src: require("assets/img/mark-finn.jpg"),
+    // src: require("assets/img/mark-finn.jpg"),
     altText: "Slide 3",
     caption: "Stocks, United States",
   },

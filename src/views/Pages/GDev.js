@@ -1,16 +1,29 @@
 
-import React, { useCallback ,useState} from "react";
-import ReactFlow, {
-    addEdge,
+import React, { useCallback ,useState,useRef} from "react";
+// import ReactFlow, {
+//     addEdge,
+//     useNodesState,
+//     useEdgesState,
+//     Background,
+//     ReactFlowProvider,
+//     useReactFlow,
+//     Panel,
+//     MiniMap,
+//     Controls,        
+//   } from 'reactflow';
+
+  import {
+    ReactFlow,
+    Background,
     useNodesState,
     useEdgesState,
-    Background,
+    addEdge,
     ReactFlowProvider,
     useReactFlow,
     Panel,
     MiniMap,
-    Controls,        
-  } from 'reactflow';
+    Controls,   
+  } from '@xyflow/react';
 
 // reactstrap components
 import {
@@ -31,17 +44,25 @@ import {
   NavbarText
 } from "reactstrap";
 
+
 // core components
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import { layoutElements } from './layout-elements.js';
 import useWindowSize from "@rooks/use-window-size";
 import CustomNode from './GCustomNode.js';
+import CoreNode from './CodeNode.js';
+import ServerNode from './ServerNode.js';
 import Sidebar from './Sidebar';
+import Modal from './ModalWinodw.js';
+import ContextMenu from './ContextMenu';
 
+import '@xyflow/react/dist/style.css';
 import 'reactflow/dist/style.css';
 
 const nodeTypes = {
   custom: CustomNode,
+  core :  CoreNode,
+  server : ServerNode
 };
 
 const initialNodes = [
@@ -49,6 +70,13 @@ const initialNodes = [
     { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
   ];
 const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
+
+const ServerData = 
+[
+    { id: 1, name: 'nginx server',ip:'192.168.1.10', status: 'green' },
+    { id: 2, name: 'database server',ip:'192.168.1.20', status: 'red' },
+    { id: 3, name: 'app server',ip:'192.168.1.30', status: 'yellow' }
+]
 
   const treeRootId = 1;
   const initialTree = {
@@ -79,6 +107,84 @@ export  function LandingPage() {
     const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
     const { screenToFlowPosition } = useReactFlow();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [events, setEvents] = useState();
+    const [returnedData, setReturnedData] = useState(null);
+    const [menu, setMenu] = useState(null);
+    const ref = useRef(null);
+
+    const openModal = () => {
+      setIsModalOpen(true);
+    };
+  
+    const closeModal = () => {      
+      setIsModalOpen(false);               
+    };
+
+    const acceptModal = () => {
+      setIsModalOpen(false);      
+      createNode(returnedData);   
+    }
+
+    const handleReturnedData = (data) => {
+      setReturnedData(data);            
+    };
+
+    const createNode = () => {
+
+      const type = events.dataTransfer.getData('application/reactflow');
+  
+        // check if the dropped element is valid
+        // if (typeof type === 'undefined' || !type) {
+        //   return;
+        // }
+
+        let nodeType = ''
+        if (returnedData === 1){
+            nodeType ='custom'
+        } else if (returnedData === 2){
+          nodeType = 'core'
+        } else if (returnedData === 3){
+          nodeType = 'server'
+        }
+
+        // project was renamed to screenToFlowPosition
+        //       and you don't need to subtract the reactFlowBounds.left/top anymore
+        //       details: https://reactflow.dev/whats-new/2023-11-10
+        const position = screenToFlowPosition({
+          x: events.clientX,
+          y: events.clientY,
+        });
+        const newNode = {
+          id: getId(),
+          type: nodeType,
+          position,
+          data: { status:ServerData[3]?.status, name: ServerData[3]?.name , ip:ServerData[3]?.ip, label: `${type} node` },
+          // status: 'green'
+        };
+  
+        setNodes((nds) => nds.concat(newNode));
+    }
+
+    const onNodeContextMenu = useCallback(
+      (event, node) => {
+        // Prevent native context menu from showing
+        event.preventDefault();
+  
+        // Calculate position of the context menu. We want to make sure it
+        // doesn't get positioned off-screen.
+        const pane = ref.current.getBoundingClientRect();
+        setMenu({
+          id: node.id,
+          top: event.clientY < pane.height - 200 && event.clientY,
+          left: event.clientX < pane.width - 200 && event.clientX,
+          right: event.clientX >= pane.width - 200 && pane.width - event.clientX,
+          bottom:
+            event.clientY >= pane.height - 200 && pane.height - event.clientY,
+        });
+      },
+      [setMenu],
+    );
 
     // const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     // const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -96,29 +202,9 @@ export  function LandingPage() {
     const onDrop = useCallback(
       (event) => {
         event.preventDefault();
-  
-        const type = event.dataTransfer.getData('application/reactflow');
-  
-        // check if the dropped element is valid
-        if (typeof type === 'undefined' || !type) {
-          return;
-        }
-  
-        // project was renamed to screenToFlowPosition
-        // and you don't need to subtract the reactFlowBounds.left/top anymore
-        // details: https://reactflow.dev/whats-new/2023-11-10
-        const position = screenToFlowPosition({
-          x: event.clientX,
-          y: event.clientY,
-        });
-        const newNode = {
-          id: getId(),
-          type:'custom',
-          position,
-          data: { label: `${type} node` },
-        };
-  
-        setNodes((nds) => nds.concat(newNode));
+
+        setEvents(event)
+        openModal()
       },
       [screenToFlowPosition],
     );
@@ -157,6 +243,9 @@ export  function LandingPage() {
         backgroudColor: '#f0f2f7'
     }
 
+  // Close the context menu if it's open whenever the window is clicked.
+  const onPaneClick = useCallback(() => setMenu(null), [setMenu]);
+
   return (
     <>
       {/* <ExamplesNavbar /> */}
@@ -190,6 +279,7 @@ export  function LandingPage() {
                 {/* <br/> */}
                 {/* test react flow */}
                   <ReactFlow
+                    ref={ref}
                     nodes={nodes}
                     edges={edges}
                     onNodesChange={onNodesChange}
@@ -197,11 +287,12 @@ export  function LandingPage() {
                     onConnect={onConnect}   
                     onDrop={onDrop}
                     onDragOver={onDragOver}
-                    // zoomOnScroll = {false}
+                    onNodeContextMenu={onNodeContextMenu}                    
                     nodeTypes={nodeTypes}
                     fitView              
                     className="bg-teal-50"
                     style={{ background: bgColor }}
+                    // zoomOnScroll = {false}
                     // style={{ ...flowCSS }}
                 >           
                    {/* <Panel position="top-right">
@@ -212,6 +303,7 @@ export  function LandingPage() {
                     <Controls />
                     <MiniMap />
                     <Background variant="dots" gap={12} size={1} />
+                    {menu && <ContextMenu onClick={onPaneClick} {...menu} />}
                     {/* <Panel>
                       <h3>Node Toolbar position:</h3>
                       <button onClick={() => setPosition(Position.Top)}>top</button>
@@ -233,7 +325,7 @@ export  function LandingPage() {
                               <input
                                 value="test"
                               />
-                                <br/>
+                              <br/>
                               <label className="updatenode__bglabel">background:</label>                        
                               <input value="nodebg" />
                               <div className="updatenode__checkboxwrapper">
@@ -243,12 +335,17 @@ export  function LandingPage() {
                                   checked="nodeHidden"                           
                                 />
                               </div>
+
+                            <button onClick={openModal}>Open Modal</button>
+                            <Modal isOpen={isModalOpen} onClose={closeModal} onAccept={acceptModal} statusBar={false} returnData={handleReturnedData} />                                                     
+
                             </div>
 
                 </ReactFlow>
                 </Col>
             </Row>            
         </div>
+
         </section>
         </div>            
       </>
