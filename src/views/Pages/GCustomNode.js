@@ -91,10 +91,10 @@ function CustomNode({ data }) {
         </CardFooter> */}
         </Card>
 
-            <ModalWindow  isOpen={isModalOpen} onClose={closeModal}>
-                              <h2>Modal Content</h2>
-                              <p>This is the content inside the modal.</p>
-            </ModalWindow>
+        <ModalWindow  isOpen={isModalOpen} onClose={closeModal}>
+            <h2>Modal Content</h2>
+            <p>This is the content inside the modal.</p>
+        </ModalWindow>
             
         <Modal className='modal-success' isOpen={isModalOpen} toggle={closeModal} fade={false}>
             <ModalHeader toggle={closeModal}>Configure Processor | <small>ConsumeKafka_2_0 1.21.0</small>                        

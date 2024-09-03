@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useReactFlow } from '@xyflow/react';
+import { useReactFlow } from 'reactflow';
 
 export default function ContextMenu({
   id,
@@ -40,8 +40,14 @@ export default function ContextMenu({
       <p style={{ margin: '0.5em' }}>
         <small>node: {id}</small>
       </p>
-      <button onClick={duplicateNode}>duplicate</button>
-      <button onClick={deleteNode}>delete</button>
+      <ul class="menu-options">
+      <li onClick={duplicateNode}><i className="tim-icons icon-settings text-black" />Configure</li>
+      <li divider/>
+      <li onClick={duplicateNode}><i className="tim-icons icon-app text-black" />Duplicate</li>
+      <li onClick={deleteNode}><i className="tim-icons icon-simple-remove text-black" />Delete</li>  
+        {/* <li><button onClick={duplicateNode}>duplicate</button></li>
+        <li><button onClick={deleteNode}>delete</button></li>       */}
+      </ul>
     </div>
   );
 }

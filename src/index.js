@@ -30,11 +30,13 @@ import ProfilePage from "views/examples/ProfilePage.js";
 import About from "views/Pages/About.js";
 import Graph from "views/Pages/ReactGraph.js";
 import GDev from "views/Pages/GDev.js";
+import AboutUs from "views/examples/AboutUs.js";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
+  <div onContextMenu={(e) => e.preventDefault()}>
   <BrowserRouter>
     <Routes>
       <Route path="/components" element={<Index />} />
@@ -45,6 +47,8 @@ root.render(
       <Route path="/graph" element={<Graph />} />
       <Route path="/gdev" element={<GDev />} />
       <Route path="*" element={<Navigate to="/components" replace />} />
+      <Route path="/about-us" render={(props) => <AboutUs {...props} />} />
     </Routes>
   </BrowserRouter>
+  </div>
 );

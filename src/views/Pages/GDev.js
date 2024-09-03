@@ -1,29 +1,30 @@
 
 import React, { useCallback ,useState,useRef} from "react";
-// import ReactFlow, {
-//     addEdge,
-//     useNodesState,
-//     useEdgesState,
-//     Background,
-//     ReactFlowProvider,
-//     useReactFlow,
-//     Panel,
-//     MiniMap,
-//     Controls,        
-//   } from 'reactflow';
-
-  import {
-    ReactFlow,
-    Background,
+import ReactFlow, {
+    addEdge,
     useNodesState,
     useEdgesState,
-    addEdge,
+    Background,
     ReactFlowProvider,
     useReactFlow,
     Panel,
     MiniMap,
-    Controls,   
-  } from '@xyflow/react';
+    Controls,        
+    ConnectionLineType
+  } from 'reactflow';
+
+  // import {
+  //   ReactFlow,
+  //   Background,
+  //   useNodesState,
+  //   useEdgesState,
+  //   addEdge,
+  //   ReactFlowProvider,
+  //   useReactFlow,
+  //   Panel,
+  //   MiniMap,
+  //   Controls,   
+  // } from '@xyflow/react';
 
 // reactstrap components
 import {
@@ -55,8 +56,10 @@ import ServerNode from './ServerNode.js';
 import Sidebar from './Sidebar';
 import Modal from './ModalWinodw.js';
 import ContextMenu from './ContextMenu';
+import PageContextMenu from './PageContextMenu';
 
-import '@xyflow/react/dist/style.css';
+
+// import '@xyflow/react/dist/style.css';
 import 'reactflow/dist/style.css';
 
 const nodeTypes = {
@@ -102,7 +105,10 @@ const { nodes: layoutedNodes, edges: layoutedEdges } = layoutElements(
 
 const initBgColor = '#f0f2f7';
 
-export  function LandingPage() {
+// Create context for managing context menu state
+export const ContextMenuContext = React.createContext();
+
+export  function LandingPage({ children }) {
 
     const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
@@ -113,12 +119,35 @@ export  function LandingPage() {
     const [menu, setMenu] = useState(null);
     const ref = useRef(null);
 
+    const [contextMenu, setContextMenu] = useState({
+      xPos: '0px',
+      yPos: '0px',
+      showMenu: false,
+    });
+
+    const handleContextMenu = (e) => {      
+      e.preventDefault();      
+
+      const xPos = `${e.pageX}px`;
+      const yPos = `${e.pageY}px`;      
+      setContextMenu({ xPos, yPos, showMenu: e.pageY > 90 ? true : false });                  
+    };
+  
+    const handleClick = () => {
+      setContextMenu({ ...contextMenu, showMenu: false });
+      setMenu(null);
+    };
+
     const openModal = () => {
       setIsModalOpen(true);
+      setMenu(null);
+      setContextMenu({ ...contextMenu, showMenu: false });
     };
   
     const closeModal = () => {      
-      setIsModalOpen(false);               
+      setIsModalOpen(false);         
+      setMenu(null);
+      setContextMenu({ ...contextMenu, showMenu: false });      
     };
 
     const acceptModal = () => {
@@ -130,8 +159,10 @@ export  function LandingPage() {
       setReturnedData(data);            
     };
 
-    const createNode = () => {
+    // Close the context menu if it's open whenever the window is clicked.
+    const onPaneClick = useCallback(() => {  setContextMenu({ ...contextMenu, showMenu: false }); setMenu(null)}, [setMenu]);
 
+    const createNode = () => {
       const type = events.dataTransfer.getData('application/reactflow');
   
         // check if the dropped element is valid
@@ -147,7 +178,6 @@ export  function LandingPage() {
         } else if (returnedData === 3){
           nodeType = 'server'
         }
-
         // project was renamed to screenToFlowPosition
         //       and you don't need to subtract the reactFlowBounds.left/top anymore
         //       details: https://reactflow.dev/whats-new/2023-11-10
@@ -159,7 +189,7 @@ export  function LandingPage() {
           id: getId(),
           type: nodeType,
           position,
-          data: { status:ServerData[3]?.status, name: ServerData[3]?.name , ip:ServerData[3]?.ip, label: `${type} node` },
+          data: { status:ServerData[1]?.status, name: ServerData[1]?.name , ip:ServerData[1]?.ip, label: `${type} node` },
           // status: 'green'
         };
   
@@ -168,19 +198,21 @@ export  function LandingPage() {
 
     const onNodeContextMenu = useCallback(
       (event, node) => {
+        setContextMenu({ ...contextMenu, showMenu: false });
         // Prevent native context menu from showing
         event.preventDefault();
-  
+     
         // Calculate position of the context menu. We want to make sure it
         // doesn't get positioned off-screen.
         const pane = ref.current.getBoundingClientRect();
+
         setMenu({
           id: node.id,
-          top: event.clientY < pane.height - 200 && event.clientY,
-          left: event.clientX < pane.width - 200 && event.clientX,
-          right: event.clientX >= pane.width - 200 && pane.width - event.clientX,
+          top: event.clientY < pane.height && event.clientY - 100,
+          left: event.clientX < pane.width && event.clientX ,
+          right: event.clientX >= pane.width  && pane.width - event.clientX,
           bottom:
-            event.clientY >= pane.height - 200 && pane.height - event.clientY,
+            event.clientY >= pane.height  && pane.height - event.clientY,
         });
       },
       [setMenu],
@@ -189,15 +221,33 @@ export  function LandingPage() {
     // const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
     // const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   
+   
+    const onMoveStart = useCallback ((event)  => {
+    // console.log('move')
+      setMenu(null);
+      setContextMenu({ ...contextMenu, showMenu: false });
+    },);
+
     const onConnect = useCallback(
-        (params) => setEdges((eds) => addEdge(params, eds)),
-        [setEdges],
-      );
+      (params) =>
+        setEdges((eds) =>
+          addEdge(
+            { ...params, type: ConnectionLineType.SmoothStep, animated: true },
+            eds,
+          ),
+        ),
+      [],
+    );
 
     const onDragOver = useCallback((event) => {
         event.preventDefault();
-        event.dataTransfer.dropEffect = 'move';
+        event.dataTransfer.dropEffect = 'move';        
       }, []);
+
+    const onPaneContextMenu = useCallback((event) => {
+      event.preventDefault();
+      setMenu(false)
+    }, []);
 
     const onDrop = useCallback(
       (event) => {
@@ -212,10 +262,10 @@ export  function LandingPage() {
     const { setViewport, zoomIn, zoomOut ,zoomTo} = useReactFlow();
 
     const handleTransform = useCallback(() => {
-        setViewport({ x: 0, y: 0, zoom: 1 }, { duration: 200 });
+        setViewport({ x: 0, y: 0, zoom: 1 }, { duration: 200 });        
       }, [setViewport]);
 
-    zoomTo(0.6);
+    // zoomTo(0.6);
 
     const [bgColor, setBgColor] = useState(initBgColor);
     React.useEffect(() => {
@@ -243,15 +293,14 @@ export  function LandingPage() {
         backgroudColor: '#f0f2f7'
     }
 
-  // Close the context menu if it's open whenever the window is clicked.
-  const onPaneClick = useCallback(() => setMenu(null), [setMenu]);
-
   return (
     <>
-      {/* <ExamplesNavbar /> */}
+    <div onContextMenu={handleContextMenu}>      
       {/* <div className="black-overlay"></div> */}
       <div className="wrapper">
       <section >    
+
+      {/* <PageContextMenu xPos={contextMenu.xPos} yPos={contextMenu.yPos} /> */}
       {/* <Navbar                
         dark
       >
@@ -287,10 +336,15 @@ export  function LandingPage() {
                     onConnect={onConnect}   
                     onDrop={onDrop}
                     onDragOver={onDragOver}
-                    onNodeContextMenu={onNodeContextMenu}                    
+                    onNodeClick={handleClick}
+                    onPaneClick={onPaneClick}                    
+                    onNodeContextMenu={onNodeContextMenu}      
+                    onPaneContextMenu={onPaneContextMenu}   
+                    onMoveStart={onMoveStart}           
                     nodeTypes={nodeTypes}
                     fitView              
                     className="bg-teal-50"
+                    connectionLineType={ConnectionLineType.SmoothStep}
                     style={{ background: bgColor }}
                     // zoomOnScroll = {false}
                     // style={{ ...flowCSS }}
@@ -319,7 +373,9 @@ export  function LandingPage() {
                         <span>Always show toolbar</span>
                       </label>
                     </Panel> */}
-
+                      {/* {showContextMenu && ( */}
+                       {!menu && !isModalOpen && <PageContextMenu xPos={contextMenu.xPos} yPos={contextMenu.yPos} showMenu={contextMenu.showMenu} />}
+                        {/* )} */}
                       <div className="updatenode__controls">
                               <label>label:</label>
                               <input
@@ -338,16 +394,14 @@ export  function LandingPage() {
 
                             <button onClick={openModal}>Open Modal</button>
                             <Modal isOpen={isModalOpen} onClose={closeModal} onAccept={acceptModal} statusBar={false} returnData={handleReturnedData} />                                                     
-
-                            </div>
-
+                    </div>
                 </ReactFlow>
                 </Col>
             </Row>            
         </div>
-
         </section>
-        </div>            
+        </div>              
+        </div>
       </>
   );
 }
